@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,22 +45,10 @@ public class NewsServiceImpl implements NewsService {
         return news.get();
     }
 
-//    @Override
-//    @Transactional
-//    public List<Image> uploadImgNews(Long id, List<MultipartFile> multipartFiles) {
-//        Optional<News> news = newsRepository.findById(id);
-//        checkNewsException(news);
-//
-//        List<Image> imageList = new ArrayList<>();
-//        multipartFiles.forEach(multipartFile -> {
-//            imageList.add(createImgNews(news.get(), new Image(), multipartFile));
-//        });
-//        return imageList;
-//    }
-
-    public Image createImgNews(Image image, MultipartFile multipartFile) {
+    public void createImgNews(News news, Image image, MultipartFile multipartFile) {
         image.setImageUrl(uploadFile.getUrlFromFile(multipartFile));
-        return imageRepository.save(image);
+        image.setNews(news);
+        imageRepository.save(image);
     }
 
     @Override
@@ -69,11 +56,9 @@ public class NewsServiceImpl implements NewsService {
     public News createNews(NewsDto newsDto, List<MultipartFile> multipartFiles) {
         News news = modelMapper.map(newsDto, News.class);
 
-        List<Image> imageList = new ArrayList<>();
         multipartFiles.forEach(multipartFile -> {
-            imageList.add(createImgNews(new Image(), multipartFile));
+            createImgNews(news, new Image(), multipartFile);
         });
-        news.setImages(imageList);
         return newsRepository.save(news);
     }
 
@@ -84,11 +69,9 @@ public class NewsServiceImpl implements NewsService {
         checkNewsException(news);
 
         modelMapper.map(newsDto, news.get());
-        List<Image> imageList = new ArrayList<>();
         multipartFiles.forEach(multipartFile -> {
-            imageList.add(createImgNews(new Image(), multipartFile));
+            createImgNews(news.get(), new Image(), multipartFile);
         });
-        news.get().setImages(imageList);
         return newsRepository.save(news.get());
     }
 
