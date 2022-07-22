@@ -14,15 +14,11 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "product_sizes", uniqueConstraints = @UniqueConstraint(columnNames = {"id_product", "value"}))
+//@Table(name = "product_sizes", uniqueConstraints = @UniqueConstraint(columnNames = {"id_product", "value"}))
+@Table(name = "product_sizes")
 public class ProductSize extends AbstractAuditingEntity {
 
     private Integer value;
 
     private Integer currentNumber;
-
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_product")
-    @JsonIgnore
-    private Product product;
 }

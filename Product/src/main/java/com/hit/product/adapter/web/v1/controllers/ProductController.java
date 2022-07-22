@@ -55,11 +55,11 @@ public class ProductController {
 
     @PostMapping(UrlConstant.Product.DATA_PRODUCT_CREATE)
     public ResponseEntity<?> createProduct(@PathVariable("idCategory") Long idCategory,
-                                           @RequestBody ProductDto productDto,
-                                           @RequestBody List<ProductColor> productColors,
-                                           @RequestBody List<ProductSize> productSizes,
-                                           @RequestParam("img") List<MultipartFile> multipartFiles) {
-        return VsResponseUtil.ok(productService.createProduct(idCategory, productDto, productColors, productSizes, multipartFiles));
+                                           @ModelAttribute ProductDto productDto,
+                                           @RequestParam(value = "size", required = false) List<Integer> sizes,
+                                           @RequestParam(value = "color", required = false) List<String> colors,
+                                           @RequestParam(value = "img", required = false) List<MultipartFile> multipartFiles) {
+        return VsResponseUtil.ok(productService.createProduct(idCategory, productDto, sizes, colors, multipartFiles));
     }
 
     @PostMapping(UrlConstant.Product.DATA_PRODUCT_SEARCH)

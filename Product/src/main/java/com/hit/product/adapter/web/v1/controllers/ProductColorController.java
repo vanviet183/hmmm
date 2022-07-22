@@ -32,6 +32,11 @@ public class ProductColorController {
         return VsResponseUtil.ok(productColorService.createListProductColor(productColorDTOs));
     }
 
+    @PostMapping(UrlConstant.ProductColor.DATA_PRODUCT_COLOR_FOR_PRODUCT)
+    public ResponseEntity<?> createProductColorForProduct(@PathVariable("idProduct") Long idProduct, @RequestParam("color") List<String> listColor) {
+        return VsResponseUtil.ok(productColorService.createListProductColorForProduct(idProduct, listColor));
+    }
+
     @PatchMapping(UrlConstant.ProductColor.DATA_PRODUCT_COLOR_ID)
     public ResponseEntity<?> updateProductColor(@PathVariable("id") Long id, @RequestBody ProductColorDto productColorDto) {
         return VsResponseUtil.ok(productColorService.updateProductColor(id, productColorDto));

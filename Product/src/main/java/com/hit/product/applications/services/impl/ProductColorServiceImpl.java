@@ -3,9 +3,11 @@ package com.hit.product.applications.services.impl;
 import com.github.slugify.Slugify;
 import com.hit.product.adapter.web.v1.transfer.responses.TrueFalseResponse;
 import com.hit.product.applications.repositories.ProductColorRepository;
+import com.hit.product.applications.repositories.ProductRepository;
 import com.hit.product.applications.services.ProductColorService;
 import com.hit.product.configs.exceptions.NotFoundException;
 import com.hit.product.domains.dtos.ProductColorDto;
+import com.hit.product.domains.entities.Product;
 import com.hit.product.domains.entities.ProductColor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class ProductColorServiceImpl implements ProductColorService {
 
     @Autowired
     ProductColorRepository productColorRepository;
+
+    @Autowired
+    ProductRepository productRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -74,8 +79,27 @@ public class ProductColorServiceImpl implements ProductColorService {
         return new TrueFalseResponse(true);
     }
 
+    @Override
+    @Transactional
+    public Product createListProductColorForProduct(Long idProduct, List<String> listColor) {
+        Optional<Product> product = productRepository.findById(idProduct);
+        checkProductException(product);
+
+        listColor.forEach(color -> {
+            Optional<ProductColor> productColor = productColorRepository.findBySlug(color);
+            checkProductColorException(productColor);
+        });
+        return product.get();
+    }
+
     private void checkProductColorException(Optional<ProductColor> productColor) {
         if(productColor.isEmpty()) {
+            throw new NotFoundException("Not Found");
+        }
+    }
+
+    private void checkProductException(Optional<Product> product) {
+        if(product.isEmpty()) {
             throw new NotFoundException("Not Found");
         }
     }

@@ -107,13 +107,14 @@ public class UrlConstant {
   }
 
   public static class News {
-    private News() {
+      private News() {
     }
 
     private static final String PRE_FIX = "/news";
     public static final String DATA_NEWS = PRE_FIX;
     public static final String DATA_NEWS_ID = PRE_FIX + "/{id}";
     public static final String DATA_NEWS_CREATE = PRE_FIX + "/create";
+    public static final String DATA_NEWS_SEARCH = PRE_FIX + "/search";
   }
 
   public static class Notification {
@@ -159,6 +160,7 @@ public class UrlConstant {
     private static final String PRE_FIX = "/product-colors";
     public static final String DATA_PRODUCT_COLOR = PRE_FIX;
     public static final String DATA_PRODUCT_COLOR_ID = PRE_FIX + "/{id}";
+    public static final String DATA_PRODUCT_COLOR_FOR_PRODUCT = PRE_FIX + "/{idProduct}";
     public static final String DATA_PRODUCT_COLOR_CREATE = PRE_FIX + "/create";
   }
 
@@ -169,6 +171,7 @@ public class UrlConstant {
     private static final String PRE_FIX = "/product-sizes";
     public static final String DATA_PRODUCT_SIZE = PRE_FIX;
     public static final String DATA_PRODUCT_SIZE_ID = PRE_FIX + "/{id}";
+    public static final String DATA_PRODUCT_SIZE_FOR_PRODUCT = PRE_FIX + "/{idProduct}";
     public static final String DATA_PRODUCT_SIZE_CREATE = PRE_FIX + "/create";
   }
 

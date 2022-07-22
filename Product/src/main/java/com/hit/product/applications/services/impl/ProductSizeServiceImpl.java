@@ -5,6 +5,7 @@ import com.hit.product.applications.repositories.ProductSizeRepository;
 import com.hit.product.applications.services.ProductSizeService;
 import com.hit.product.configs.exceptions.NotFoundException;
 import com.hit.product.domains.dtos.ProductSizeDto;
+import com.hit.product.domains.entities.Product;
 import com.hit.product.domains.entities.ProductSize;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

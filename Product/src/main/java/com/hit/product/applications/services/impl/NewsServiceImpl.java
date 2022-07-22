@@ -1,5 +1,6 @@
 package com.hit.product.applications.services.impl;
 
+import com.github.slugify.Slugify;
 import com.hit.product.adapter.web.v1.transfer.responses.TrueFalseResponse;
 import com.hit.product.applications.repositories.ImageRepository;
 import com.hit.product.applications.repositories.NewsRepository;
@@ -56,6 +57,11 @@ public class NewsServiceImpl implements NewsService {
     public News createNews(NewsDto newsDto, List<MultipartFile> multipartFiles) {
         News news = modelMapper.map(newsDto, News.class);
 
+        Slugify slug = new Slugify();
+        String result = slug.slugify(news.getTitle());
+
+        news.setSlug(result);
+
         multipartFiles.forEach(multipartFile -> {
             createImgNews(news, new Image(), multipartFile);
         });
@@ -81,6 +87,14 @@ public class NewsServiceImpl implements NewsService {
         checkNewsException(news);
         newsRepository.deleteById(id);
         return new TrueFalseResponse(true);
+    }
+
+    @Override
+    public List<News> searchNews(String title) {
+        Slugify slug = new Slugify();
+        String result = slug.slugify(title);
+
+        return newsRepository.findBySlugContaining(result);
     }
 
     private void checkNewsException(Optional<News> news) {

@@ -22,8 +22,8 @@ public interface ProductService {
 
     Product createProduct(Long categoryId,
                           ProductDto productDto,
-                          List<ProductColor> productColorDTOs,
-                          List<ProductSize> productSizeDTOs,
+                          List<Integer> sizes,
+                          List<String> colors,
                           List<MultipartFile> multipartFiles);
 
     Product updateProduct(Long id, ProductDto productDto, List<MultipartFile> multipartFiles);

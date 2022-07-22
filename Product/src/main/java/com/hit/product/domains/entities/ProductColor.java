@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "product_colors", uniqueConstraints = @UniqueConstraint(columnNames = {"id_product", "slug"}))
+@Table(name = "product_colors")
 public class ProductColor extends AbstractAuditingEntity {
 
     @Nationalized
@@ -25,9 +25,4 @@ public class ProductColor extends AbstractAuditingEntity {
     private String slug;
 
     private Integer currentNumber;
-
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_product")
-    @JsonIgnore
-    private Product product;
 }

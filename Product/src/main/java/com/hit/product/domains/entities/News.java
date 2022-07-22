@@ -26,6 +26,8 @@ public class News extends AbstractAuditingEntity {
     @Nationalized
     String description;
 
+    String slug;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "news")
     private List<Image> images;
 

@@ -4,7 +4,6 @@ import com.hit.product.adapter.web.v1.transfer.responses.TrueFalseResponse;
 import com.hit.product.domains.dtos.BillDto;
 import com.hit.product.domains.dtos.DetailBillDto;
 import com.hit.product.domains.entities.DetailBill;
-import com.hit.product.domains.entities.DetailBillTest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

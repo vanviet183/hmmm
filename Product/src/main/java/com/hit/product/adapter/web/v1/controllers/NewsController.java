@@ -33,11 +33,11 @@ public class NewsController {
                                         @RequestParam("img") List<MultipartFile> multipartFiles) {
         return VsResponseUtil.ok(newsService.createNews(newsDto, multipartFiles));
     }
-//
-//    @PostMapping("/{id}/uploadImg")
-//    public ResponseEntity<?> uploadImg(@PathVariable("id") Long id, @RequestParam("imgNews") List<MultipartFile> multipartFiles) {
-//        return VsResponseUtil.ok(newsService.uploadImgNews(id, multipartFiles));
-//    }
+
+    @PostMapping(UrlConstant.News.DATA_NEWS_SEARCH)
+    public ResponseEntity<?> searchNews(@RequestParam("q") String title) {
+        return VsResponseUtil.ok(newsService.searchNews(title));
+    }
 
     @PatchMapping(UrlConstant.News.DATA_NEWS_ID)
     public ResponseEntity<?> updateNews(@PathVariable("id") Long id, @RequestBody NewsDto newsDto, @RequestParam("imgNews") List<MultipartFile> multipartFiles) {

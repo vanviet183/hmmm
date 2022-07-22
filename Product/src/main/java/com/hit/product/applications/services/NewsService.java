@@ -21,4 +21,5 @@ public interface NewsService {
 
     TrueFalseResponse deleteNews(Long id);
 
+    List<News> searchNews(String title);
 }

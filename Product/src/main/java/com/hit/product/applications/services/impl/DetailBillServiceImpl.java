@@ -10,7 +10,6 @@ import com.hit.product.domains.dtos.BillDto;
 import com.hit.product.domains.dtos.DetailBillDto;
 import com.hit.product.domains.entities.Bill;
 import com.hit.product.domains.entities.DetailBill;
-import com.hit.product.domains.entities.DetailBillTest;
 import com.hit.product.domains.entities.Product;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
