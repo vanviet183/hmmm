@@ -71,5 +71,5 @@ public class Product extends AbstractAuditingEntity {
 
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "product")
     @JsonIgnore
-    private List<DetailBill> detailBills;
+    private List<Cart> carts;
 }

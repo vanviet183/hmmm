@@ -40,5 +40,5 @@ public class Bill extends AbstractAuditingEntity {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "bill")
     @JsonIgnore
-    private List<DetailBill> detailBills;
+    private List<Cart> carts;
 }

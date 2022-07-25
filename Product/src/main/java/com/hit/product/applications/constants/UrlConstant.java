@@ -43,14 +43,14 @@ public class UrlConstant {
     public static final String DATA_COMMENT_CHILD_RATE_BY_USER = PRE_FIX + "/{idUser}/{idProductRate}/{idCommentParent}";
   }
 
-  public static class DetailBill {
-    private DetailBill() {
+  public static class Cart {
+    private Cart() {
     }
 
     private static final String PRE_FIX = "/detail-bills";
-    public static final String DATA_DETAIL_BILL = PRE_FIX;
-    public static final String DATA_DETAIL_BILL_ID = PRE_FIX + "/{id}";
-    public static final String DATA_DETAIL_BILL_CREATE = PRE_FIX + "/{idProduct}/create";
+    public static final String DATA_CART = PRE_FIX;
+    public static final String DATA_CART_ID = PRE_FIX + "/{id}";
+    public static final String DATA_CART_CREATE = PRE_FIX + "/{idProduct}/create";
   }
 
   public static class EmailNotification {
@@ -236,7 +236,7 @@ public class UrlConstant {
     private VerificationToken() {
     }
 
-    private static final String PRE_FIX = "/product-rates";
+    private static final String PRE_FIX = "/verify-tokens";
     public static final String DATA_VERIFICATION_TOKEN = PRE_FIX;
     public static final String DATA_VERIFICATION_TOKEN_ID = PRE_FIX + "/{id}";
     public static final String DATA_VERIFICATION_TOKEN_VERIFY_REGISTRATION = PRE_FIX + "/verifyRegistration";

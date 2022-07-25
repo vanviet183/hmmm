@@ -1,6 +1,5 @@
 package com.hit.product.domains.entities;
 
-import com.hit.product.domains.keys.DetailBillKey;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "detail_bills", uniqueConstraints = {
         @UniqueConstraint(columnNames = "id_bill")
 })
-public class DetailBill {
+public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

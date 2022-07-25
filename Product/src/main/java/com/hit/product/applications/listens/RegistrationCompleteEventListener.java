@@ -32,7 +32,7 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         // Send email to user
         log.info(event.getApplicationUrl());
         String url = event.getApplicationUrl()
-                + "/verifyRegistration?token="
+                + "/api/v1/verify-tokens/verifyRegistration?token="
                 + token;
         emailSenderService.sendSimpleEmail(user.getEmail(), url, "Verify Register VitApp Web");
 

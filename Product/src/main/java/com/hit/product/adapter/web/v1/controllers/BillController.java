@@ -5,7 +5,7 @@ import com.hit.product.adapter.web.base.VsResponseUtil;
 import com.hit.product.applications.constants.UrlConstant;
 import com.hit.product.applications.services.BillService;
 import com.hit.product.domains.dtos.BillDto;
-import com.hit.product.domains.entities.DetailBill;
+import com.hit.product.domains.entities.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +29,7 @@ public class BillController {
     }
 
     @PostMapping(UrlConstant.Bill.DATA_BILL_CREATE)
-    public ResponseEntity<?> createBill(@PathVariable("idUser") Long idUser, @RequestBody BillDto billDto, @RequestBody List<DetailBill> detailBills) {
+    public ResponseEntity<?> createBill(@PathVariable("idUser") Long idUser, @RequestBody BillDto billDto, @RequestBody List<Cart> carts) {
         return VsResponseUtil.ok(billService.createBill(idUser, billDto));
     }
 

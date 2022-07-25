@@ -123,7 +123,7 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
     @Override
     public void resendVerificationTokenMail(User user, String applicationUrl, VerificationToken verificationToken) {
         String url = applicationUrl
-                + "/verifyRegistration?token="
+                + "/api/v1/verify-tokens/verifyRegistration?token="
                 + verificationToken.getToken();
         emailSenderService.sendSimpleEmail(user.getEmail(), url, "Verify Token VitApp Web");
     }

@@ -34,7 +34,7 @@ public class SignUpEmailNotificationCompleteEventListener implements Application
         // Send email to user
         log.info(event.getApplicationUrl());
         String url = event.getApplicationUrl()
-                + "/verifyEmailNotification?token="
+                + "/api/v1/verify-tokens/verifyEmailNotification?token="
                 + token;
         emailSenderService.sendSimpleEmail(emailNotification.getEmail(), url, "Verify Sign Up Notification VitApp Web");
 

@@ -1,11 +1,11 @@
 package com.hit.product.applications.repositories;
 
-import com.hit.product.domains.entities.DetailBill;
+import com.hit.product.domains.entities.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DetailBillRepository extends JpaRepository<DetailBill, Long> {
+public interface CartRepository extends JpaRepository<Cart, Long> {
 
-    DetailBill findByBill_Id(Long idBill);
+    Cart findByBill_Id(Long idBill);
 }

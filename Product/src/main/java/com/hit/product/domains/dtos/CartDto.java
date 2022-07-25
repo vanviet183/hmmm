@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetailBillDto {
+public class CartDto {
 
     private Integer amount;
 

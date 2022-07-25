@@ -1,14 +1,12 @@
 package com.hit.product.domains.keys;
 
-import com.hit.product.domains.entities.Product;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class DetailBillKey implements Serializable {
+public class CartKey implements Serializable {
 
     @Column(name = "id_bill")
     private Long idBill;
@@ -16,12 +14,12 @@ public class DetailBillKey implements Serializable {
     @Column(name = "id_product")
     private Long idProduct;
 
-    public DetailBillKey(Long idBill, Long idProduct) {
+    public CartKey(Long idBill, Long idProduct) {
         this.idBill = idBill;
         this.idProduct = idProduct;
     }
 
-    public DetailBillKey() {
+    public CartKey() {
     }
 
     public Long getIdBill() {
@@ -44,7 +42,7 @@ public class DetailBillKey implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DetailBillKey that = (DetailBillKey) o;
+        CartKey that = (CartKey) o;
         return Objects.equals(idBill, that.idBill) && Objects.equals(idProduct, that.idProduct);
     }
 
