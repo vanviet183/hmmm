@@ -47,7 +47,7 @@ public class UrlConstant {
     private Cart() {
     }
 
-    private static final String PRE_FIX = "/detail-bills";
+    private static final String PRE_FIX = "/carts";
     public static final String DATA_CART = PRE_FIX;
     public static final String DATA_CART_ID = PRE_FIX + "/{id}";
     public static final String DATA_CART_CREATE = PRE_FIX + "/{idProduct}/create";
@@ -160,8 +160,7 @@ public class UrlConstant {
     private static final String PRE_FIX = "/product-colors";
     public static final String DATA_PRODUCT_COLOR = PRE_FIX;
     public static final String DATA_PRODUCT_COLOR_ID = PRE_FIX + "/{id}";
-    public static final String DATA_PRODUCT_COLOR_FOR_PRODUCT = PRE_FIX + "/{idProduct}";
-    public static final String DATA_PRODUCT_COLOR_CREATE = PRE_FIX + "/create";
+    public static final String DATA_PRODUCT_COLOR_FOR_PRODUCT = PRE_FIX + "/create" + "/{idProduct}";
   }
 
   public static class ProductSize {
@@ -171,8 +170,7 @@ public class UrlConstant {
     private static final String PRE_FIX = "/product-sizes";
     public static final String DATA_PRODUCT_SIZE = PRE_FIX;
     public static final String DATA_PRODUCT_SIZE_ID = PRE_FIX + "/{id}";
-    public static final String DATA_PRODUCT_SIZE_FOR_PRODUCT = PRE_FIX + "/{idProduct}";
-    public static final String DATA_PRODUCT_SIZE_CREATE = PRE_FIX + "/create";
+    public static final String DATA_PRODUCT_SIZE_FOR_PRODUCT = PRE_FIX + "/create" + "/{idProduct}";
   }
 
   public static class ProductRate {

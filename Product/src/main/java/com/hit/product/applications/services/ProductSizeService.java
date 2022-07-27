@@ -2,6 +2,7 @@ package com.hit.product.applications.services;
 
 import com.hit.product.adapter.web.v1.transfer.responses.TrueFalseResponse;
 import com.hit.product.domains.dtos.ProductSizeDto;
+import com.hit.product.domains.entities.Product;
 import com.hit.product.domains.entities.ProductSize;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,9 @@ public interface ProductSizeService {
 
     ProductSize getProductSizeById(Long id);
 
-    List<ProductSize> createListProductSize(List<ProductSizeDto> productSizeDTOs);
-
-    ProductSize updateProductSize(Long idProduct, Long id, ProductSizeDto productSizeDto);
+    ProductSize updateProductSize(Long id, ProductSizeDto productSizeDto);
 
     TrueFalseResponse deleteProductSize(Long id);
+
+    Product createListProductSizeForProduct(Long idProduct, List<ProductSizeDto> productSizeDTOs);
 }

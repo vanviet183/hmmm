@@ -10,8 +10,6 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    List<Product> findBySlug(String nameProduct);
-
     List<Product> findBySlugContaining(@Param("nameProduct") String nameProduct);
 
     List<Product> findByType(String type);

@@ -25,4 +25,9 @@ public class ProductColor extends AbstractAuditingEntity {
     private String slug;
 
     private Integer currentNumber;
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_product")
+    @JsonIgnore
+    private Product product;
 }

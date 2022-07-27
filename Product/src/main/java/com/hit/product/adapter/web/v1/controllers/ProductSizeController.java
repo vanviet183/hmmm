@@ -27,17 +27,17 @@ public class ProductSizeController {
         return VsResponseUtil.ok(productSizeService.getProductSizeById(id));
     }
 
-    @PostMapping(UrlConstant.ProductSize.DATA_PRODUCT_SIZE_CREATE)
-    public ResponseEntity<?> createProductSize(@RequestBody List<ProductSizeDto> productSizeDTOs) {
-        return VsResponseUtil.ok(productSizeService.createListProductSize(productSizeDTOs));
+    @PostMapping(UrlConstant.ProductSize.DATA_PRODUCT_SIZE_FOR_PRODUCT)
+    public ResponseEntity<?> createProductSize(@PathVariable("idProduct") Long idProduct, @RequestBody List<ProductSizeDto> productSizeDTOs) {
+        return VsResponseUtil.ok(productSizeService.createListProductSizeForProduct(idProduct, productSizeDTOs));
     }
 
-    @PatchMapping("/{idProduct}/{id}")
-    public ResponseEntity<?> updateProductC(@PathVariable("idProduct") Long idProduct, @PathVariable("id") Long id, @RequestBody ProductSizeDto productSizeDto) {
-        return VsResponseUtil.ok(productSizeService.updateProductSize(idProduct, id, productSizeDto));
+    @PatchMapping(UrlConstant.ProductSize.DATA_PRODUCT_SIZE_ID)
+    public ResponseEntity<?> updateProductSize(@PathVariable("id") Long id, @RequestBody ProductSizeDto productSizeDto) {
+        return VsResponseUtil.ok(productSizeService.updateProductSize(id, productSizeDto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(UrlConstant.ProductSize.DATA_PRODUCT_SIZE_ID)
     public ResponseEntity<?> deleteProduct(@PathVariable("id") Long id) {
         return VsResponseUtil.ok(productSizeService.deleteProductSize(id));
     }

@@ -21,4 +21,9 @@ public class ProductSize extends AbstractAuditingEntity {
     private Integer value;
 
     private Integer currentNumber;
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_product")
+    @JsonIgnore
+    private Product product;
 }

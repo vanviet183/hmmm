@@ -21,30 +21,30 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping(UrlConstant.Product.DATA_PRODUCT)
-    public ResponseEntity<?> getProducts(@RequestParam("page") Integer page) {
+    public ResponseEntity<?> getProducts(@RequestParam(name = "page", required = false, defaultValue = "") Integer page) {
         return ResponseEntity.ok().body(productService.getAllByPage(page));
     }
 
     @GetMapping(UrlConstant.Product.DATA_PRODUCT_NEWS)
-    public ResponseEntity<?> getProductsNewest(@RequestParam("page") Integer page) {
-        return ResponseEntity.ok().body(productService.getProductsNewest(page));
+    public ResponseEntity<?> getProductsNewest() {
+        return ResponseEntity.ok().body(productService.getProductsNewest());
     }
 
     @GetMapping(UrlConstant.Product.DATA_PRODUCT_SELL_BEST)
-    public ResponseEntity<?> getProductsBestSeller(@RequestParam("page") Integer page) {
-        return ResponseEntity.ok().body(productService.getProductsBestSeller(page));
+    public ResponseEntity<?> getProductsBestSeller() {
+        return ResponseEntity.ok().body(productService.getProductsBestSeller());
     }
 
     @GetMapping(UrlConstant.Product.DATA_PRODUCT_SORT)
-    public ResponseEntity<?> getProductsSort(@RequestParam("by") String type) {
+    public ResponseEntity<?> getProductsSort(@RequestParam(name = "by") String type) {
         return ResponseEntity.ok().body(productService.getProductsSort(type));
     }
 
-    @GetMapping(UrlConstant.Product.DATA_PRODUCT_FILTER)
-    public ResponseEntity<?> getProductsByFilter(@RequestParam("type") List<String> types,
-                                                 @RequestParam("size") List<Integer> sizes,
-                                                 @RequestParam("color") List<String> colors,
-                                                 @RequestParam("brand") List<String> brands) {
+    @PostMapping(UrlConstant.Product.DATA_PRODUCT_FILTER)
+    public ResponseEntity<?> getProductsByFilter(@RequestParam(name = "type", required = false, defaultValue = "") List<String> types,
+                                                 @RequestParam(name = "size", required = false, defaultValue = "") List<Integer> sizes,
+                                                 @RequestParam(name = "color", required = false, defaultValue = "") List<String> colors,
+                                                 @RequestParam(name = "brand", required = false, defaultValue = "") List<String> brands) {
         return ResponseEntity.ok().body(productService.getProductsByFilter(types, sizes, colors, brands));
     }
 
@@ -56,10 +56,8 @@ public class ProductController {
     @PostMapping(UrlConstant.Product.DATA_PRODUCT_CREATE)
     public ResponseEntity<?> createProduct(@PathVariable("idCategory") Long idCategory,
                                            @ModelAttribute ProductDto productDto,
-                                           @RequestParam(value = "size", required = false) List<Integer> sizes,
-                                           @RequestParam(value = "color", required = false) List<String> colors,
-                                           @RequestParam(value = "img", required = false) List<MultipartFile> multipartFiles) {
-        return VsResponseUtil.ok(productService.createProduct(idCategory, productDto, sizes, colors, multipartFiles));
+                                           @RequestParam(name = "img", required = false) List<MultipartFile> multipartFiles) {
+        return VsResponseUtil.ok(productService.createProduct(idCategory, productDto, multipartFiles));
     }
 
     @PostMapping(UrlConstant.Product.DATA_PRODUCT_SEARCH)
@@ -70,7 +68,7 @@ public class ProductController {
     @PatchMapping(UrlConstant.Product.DATA_PRODUCT_ID)
     public ResponseEntity<?> updateProduct(@PathVariable("id") Long id,
                                            @RequestBody ProductDto productDto,
-                                           @RequestParam("img") List<MultipartFile> multipartFiles) {
+                                           @RequestParam(name = "img", required = false) List<MultipartFile> multipartFiles) {
         return VsResponseUtil.ok(productService.updateProduct(id, productDto, multipartFiles));
     }
 

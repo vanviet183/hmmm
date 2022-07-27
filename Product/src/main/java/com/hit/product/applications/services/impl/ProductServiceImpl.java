@@ -57,16 +57,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsNewest(Integer page) {
-        return productRepository.findAll(PageRequest.of(page, 10, Sort.by("createdDate").descending())).getContent();
+    public List<Product> getProductsNewest() {
+        return productRepository.findAll(PageRequest.of(0, 10, Sort.by("createdDate").descending())).getContent();
     }
 
     @Override
-    public List<Product> getProductsBestSeller(Integer page) {
-        return productRepository.findAll(PageRequest.of(page, 10, Sort.by("amountSell").descending())).getContent();
+    public List<Product> getProductsBestSeller() {
+        return productRepository.findAll(PageRequest.of(0, 10, Sort.by("amountSell").descending())).getContent();
     }
-
-
 
     @Override
     public Product getProductById(Long id) {
@@ -76,19 +74,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Image> getImageByProductId(Long id) {
-        Optional<Product> product = productRepository.findById(id);
-        checkProductException(product);
-
-        return imageRepository.findByProduct_Id(id);
-    }
-
-    @Override
     @Transactional
     public Product createProduct(Long idCategory,
                                  ProductDto productDto,
-                                 List<Integer> sizes,
-                                 List<String> colors,
                                  List<MultipartFile> multipartFiles) {
         Optional<Category> category = categoryRepository.findById(idCategory);
         checkCategoryException(category);
@@ -101,28 +89,11 @@ public class ProductServiceImpl implements ProductService {
         String result = slug.slugify(productDto.getTitle());
         product.setSlug(result);
 
-        List<ProductSize> productSizes = new ArrayList<>();
-        sizes.forEach(size -> {
-            Optional<ProductSize> productSize = productSizeRepository.findByValue(size);
-            checkProductSizeException(productSize);
-
-            productSizes.add(productSize.get());
-        });
-        product.setProductSizes(productSizes);
-
-        List<ProductColor> productColors = new ArrayList<>();
-        colors.forEach(color -> {
-            Optional<ProductColor> productColor = productColorRepository.findBySlug(color);
-            checkProductColorException(productColor);
-
-            productColors.add(productColor.get());
-        });
-        product.setProductColorList(productColors);
-
         multipartFiles.forEach(multipartFile -> {
             createImgProduct(product, new Image(), multipartFile);
         });
 
+        product.setCategory(category.get());
         return productRepository.save(product);
     }
 
@@ -173,13 +144,13 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getProductsSort(String type) {
         switch (type) {
             case "new":
-                return productRepository.findAll(PageRequest.of(1, 10, Sort.by("title").ascending())).getContent();
+                return productRepository.findAll(PageRequest.of(0, 10, Sort.by("title").descending())).getContent();
             case "hot":
-                return productRepository.findAll(PageRequest.of(1, 10, Sort.by("title").descending())).getContent();
+                return productRepository.findAll(PageRequest.of(0, 10, Sort.by("amountSell").descending())).getContent();
             case "price-asc":
-                return productRepository.findAll(PageRequest.of(1, 10, Sort.by("price").ascending())).getContent();
+                return productRepository.findAll(PageRequest.of(0, 10, Sort.by("priceCurrent").ascending())).getContent();
             case "price-des":
-                return productRepository.findAll(PageRequest.of(1, 10, Sort.by("price").descending())).getContent();
+                return productRepository.findAll(PageRequest.of(0, 10, Sort.by("priceCurrent").descending())).getContent();
             default:
                 return productRepository.findAll();
         }
@@ -189,34 +160,32 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getProductsByFilter(List<String> types, List<Integer> sizes, List<String> colors, List<String> brands) {
         List<Product> productIsTrue = new ArrayList<>();
 
-        List<Product> products = productRepository.findAll();
-
         // Filter by type
         types.forEach(type -> {
             productIsTrue.addAll(productRepository.findByType(type));
         });
 
         // Filter by size
-        products.forEach(product -> {
-            product.getProductSizes().forEach(item -> {
-                if(sizes.contains(item.getValue()))
-                    productIsTrue.add(product);
+        sizes.forEach(size -> {
+            if(size == 40)
+                System.out.println("Yes");
+            List<ProductSize> productSizes = (productSizeRepository.findByValue(size));
+            productSizes.forEach(productSize -> {
+                productIsTrue.add(productSize.getProduct());
             });
         });
 
         // Filter by color
-        products.forEach(product -> {
-            product.getProductColorList().forEach(item -> {
-                if(colors.contains(item.getSlug()))
-                    productIsTrue.add(product);
-
+        colors.forEach(color -> {
+            List<ProductColor> productColors = (productColorRepository.findBySlug(color));
+            productColors.forEach(productColor -> {
+                productIsTrue.add(productColor.getProduct());
             });
         });
 
         // Filter by brand
         brands.forEach(brand -> {
-            List<Product> productsBrandTrue = productRepository.findByType(brand);
-            products.addAll(productsBrandTrue);
+            productIsTrue.addAll(productRepository.findByBrand(brand));
         });
 
         return productIsTrue;
@@ -230,18 +199,6 @@ public class ProductServiceImpl implements ProductService {
 
     private void checkProductException(Optional<Product> product) {
         if(product.isEmpty()) {
-            throw new NotFoundException("Not Found");
-        }
-    }
-
-    private void checkProductColorException(Optional<ProductColor> productColor) {
-        if(productColor.isEmpty()) {
-            throw new NotFoundException("Not Found");
-        }
-    }
-
-    private void checkProductSizeException(Optional<ProductSize> productSize) {
-        if(productSize.isEmpty()) {
             throw new NotFoundException("Not Found");
         }
     }

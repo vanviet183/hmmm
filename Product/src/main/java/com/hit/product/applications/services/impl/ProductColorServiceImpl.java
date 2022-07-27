@@ -44,31 +44,33 @@ public class ProductColorServiceImpl implements ProductColorService {
 
     @Override
     @Transactional
-    public List<ProductColor> createListProductColor(List<ProductColorDto> productColorDTOs) {
-        List<ProductColor> productColors = new ArrayList<>();
+    public Product createListProductColorForProduct(Long idProduct, List<ProductColorDto> productColorDTOs) {
+        Optional<Product> product = productRepository.findById(idProduct);
+        checkProductException(product);
+        Slugify slug = new Slugify();
+
         productColorDTOs.forEach(productColorDto -> {
-            productColors.add(createOrUpdate(new ProductColor(), productColorDto));
+            ProductColor productColor = modelMapper.map(productColorDto, ProductColor.class);
+            productColor.setSlug(slug.slugify(productColorDto.getColor()));
+            productColor.setProduct(product.get());
+            productColorRepository.save(productColor);
         });
-        return productColors;
+        return product.get();
     }
+
 
     @Override
     public ProductColor updateProductColor(Long id, ProductColorDto productColorDto) {
         Optional<ProductColor> productColor = productColorRepository.findById(id);
         checkProductColorException(productColor);
 
-        return createOrUpdate(productColor.get(), productColorDto);
-    }
-
-
-    private ProductColor createOrUpdate(ProductColor productColor, ProductColorDto productColorDto) {
-        modelMapper.map(productColorDto, productColor);
+        modelMapper.map(productColorDto, productColor.get());
 
         Slugify slug = new Slugify();
         String result = slug.slugify(productColorDto.getColor());
-        productColor.setSlug(result);
+        productColor.get().setSlug(result);
 
-        return productColorRepository.save(productColor);
+        return productColorRepository.save(productColor.get());
     }
 
     @Override
@@ -79,18 +81,6 @@ public class ProductColorServiceImpl implements ProductColorService {
         return new TrueFalseResponse(true);
     }
 
-    @Override
-    @Transactional
-    public Product createListProductColorForProduct(Long idProduct, List<String> listColor) {
-        Optional<Product> product = productRepository.findById(idProduct);
-        checkProductException(product);
-
-        listColor.forEach(color -> {
-            Optional<ProductColor> productColor = productColorRepository.findBySlug(color);
-            checkProductColorException(productColor);
-        });
-        return product.get();
-    }
 
     private void checkProductColorException(Optional<ProductColor> productColor) {
         if(productColor.isEmpty()) {

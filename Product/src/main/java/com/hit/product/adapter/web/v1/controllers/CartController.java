@@ -26,11 +26,6 @@ public class CartController {
         return VsResponseUtil.ok(cartService.getCartById(id));
     }
 
-//    @PostMapping("/{idBill}/{idProduct}")
-//    public ResponseEntity<?> createCart(@PathVariable("idBill") Long idBill, @PathVariable("idProduct") Long idProduct, @RequestBody CartDto CartDto) {
-//        return VsResponseUtil.ok(CartService.createCart(idBill, idProduct, CartDto));
-//    }
-
     @PostMapping(UrlConstant.Cart.DATA_CART_CREATE)
     public ResponseEntity<?> createCart(@PathVariable("idProduct") Long idProduct, @RequestBody CartDto cartDto) {
         return VsResponseUtil.ok(cartService.createCart(idProduct, cartDto));

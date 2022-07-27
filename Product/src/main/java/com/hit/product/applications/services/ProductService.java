@@ -18,12 +18,8 @@ public interface ProductService {
 
     Product getProductById(Long id);
 
-    List<Image> getImageByProductId(Long id);
-
     Product createProduct(Long categoryId,
                           ProductDto productDto,
-                          List<Integer> sizes,
-                          List<String> colors,
                           List<MultipartFile> multipartFiles);
 
     Product updateProduct(Long id, ProductDto productDto, List<MultipartFile> multipartFiles);
@@ -34,9 +30,9 @@ public interface ProductService {
 
     List<Product> getProductsSort(String type);
 
-    List<Product> getProductsNewest(Integer page);
+    List<Product> getProductsNewest();
 
-    List<Product> getProductsBestSeller(Integer page);
+    List<Product> getProductsBestSeller();
 
     List<Product> getProductsByFilter(List<String> types, List<Integer> sizes, List<String> colors, List<String> brands);
 }
