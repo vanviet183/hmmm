@@ -30,6 +30,11 @@ public class VoucherController {
         return VsResponseUtil.ok(voucherService.createVoucher(VoucherDto));
     }
 
+    @PostMapping(UrlConstant.Voucher.DATA_VOUCHER_CREATE_FOR_PRODUCT)
+    public ResponseEntity<?> createVoucherForProduct(@PathVariable("idProduct") Long idProduct, @RequestBody VoucherDto VoucherDto) {
+        return VsResponseUtil.ok(voucherService.createVoucherForProduct(idProduct, VoucherDto));
+    }
+
     @PostMapping(UrlConstant.Voucher.DATA_VOUCHER_GET_VOUCHER)
     public ResponseEntity<?> addVoucherToUser(@PathVariable("idUser") Long idUser, @PathVariable("idVoucher") Long idVoucher) {
         return VsResponseUtil.ok(voucherService.addVoucherToUser(idUser, idVoucher));

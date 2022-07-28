@@ -250,6 +250,7 @@ public class UrlConstant {
     public static final String DATA_VOUCHER = PRE_FIX;
     public static final String DATA_VOUCHER_ID = PRE_FIX + "/{id}";
     public static final String DATA_VOUCHER_CREATE = PRE_FIX + "/create";
+    public static final String DATA_VOUCHER_CREATE_FOR_PRODUCT = PRE_FIX + "/create/{idProduct}";
     public static final String DATA_VOUCHER_GET_VOUCHER = PRE_FIX + "/{idUser}/{idVoucher}";
     public static final String DATA_VOUCHER_AVATAR = PRE_FIX + "/{id}/avatar";
     public static final String DATA_VOUCHER_EXPORT = PRE_FIX + "/export";

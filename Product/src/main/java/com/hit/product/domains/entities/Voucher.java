@@ -13,7 +13,6 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "vouchers")
 public class Voucher extends AbstractAuditingEntity {
@@ -22,9 +21,16 @@ public class Voucher extends AbstractAuditingEntity {
 
     private Double percent;
 
+    private String description;
+
     private Date expirationTime;
 
     private Boolean status = Boolean.FALSE;
+
+    public Voucher() {
+        super();
+        this.expirationTime = calculateExpirationDate(EXPIRATION_TIME);
+    }
 
     public Voucher(User user, Double percent) {
         super();
@@ -46,4 +52,8 @@ public class Voucher extends AbstractAuditingEntity {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_event")
     private Event event;
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_product")
+    private Product product;
 }

@@ -12,4 +12,7 @@ import lombok.Setter;
 public class VoucherDto {
 
     private Double percent;
+
+    private String description;
+
 }

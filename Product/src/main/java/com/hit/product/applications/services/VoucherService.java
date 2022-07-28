@@ -21,4 +21,6 @@ public interface VoucherService {
     TrueFalseResponse deleteVoucher(Long id);
 
     TrueFalseResponse addVoucherToUser(Long idUser, Long idVoucher);
+
+    Voucher createVoucherForProduct(Long idProduct, VoucherDto voucherDto);
 }

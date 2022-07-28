@@ -1,11 +1,13 @@
 package com.hit.product.applications.services.impl;
 
 import com.hit.product.adapter.web.v1.transfer.responses.TrueFalseResponse;
+import com.hit.product.applications.repositories.ProductRepository;
 import com.hit.product.applications.repositories.UserRepository;
 import com.hit.product.applications.repositories.VoucherRepository;
 import com.hit.product.applications.services.VoucherService;
 import com.hit.product.configs.exceptions.NotFoundException;
 import com.hit.product.domains.dtos.VoucherDto;
+import com.hit.product.domains.entities.Product;
 import com.hit.product.domains.entities.User;
 import com.hit.product.domains.entities.Voucher;
 import org.modelmapper.ModelMapper;
@@ -23,6 +25,9 @@ public class VoucherServiceImpl implements VoucherService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ProductRepository productRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -77,6 +82,17 @@ public class VoucherServiceImpl implements VoucherService {
         return new TrueFalseResponse(true);
     }
 
+    @Override
+    public Voucher createVoucherForProduct(Long idProduct, VoucherDto voucherDto) {
+        Optional<Product> product = productRepository.findById(idProduct);
+        checkProductException(product);
+
+        Voucher voucher = modelMapper.map(voucherDto, Voucher.class);
+        voucher.setProduct(product.get());
+
+        return voucherRepository.save(voucher);
+    }
+
     private void checkVoucherException(Optional<Voucher> voucher) {
         if(voucher.isEmpty()) {
             throw new NotFoundException("Not Found");
@@ -85,6 +101,12 @@ public class VoucherServiceImpl implements VoucherService {
 
     private void checkUserException(Optional<User> user) {
         if(user.isEmpty()) {
+            throw new NotFoundException("Not Found");
+        }
+    }
+
+    private void checkProductException(Optional<Product> product) {
+        if(product.isEmpty()) {
             throw new NotFoundException("Not Found");
         }
     }
