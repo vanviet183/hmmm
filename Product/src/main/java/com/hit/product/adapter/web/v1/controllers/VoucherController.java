@@ -17,7 +17,7 @@ public class VoucherController {
 
     @GetMapping(UrlConstant.Voucher.DATA_VOUCHER)
     public ResponseEntity<?> getVouchers() {
-        return VsResponseUtil.ok(voucherService.getVouchers());
+        return ResponseEntity.ok().body(voucherService.getVouchers());
     }
 
     @GetMapping(UrlConstant.Voucher.DATA_VOUCHER_ID)

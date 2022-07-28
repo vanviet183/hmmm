@@ -25,7 +25,7 @@ public class Voucher extends AbstractAuditingEntity {
 
     private Date expirationTime;
 
-    private Boolean status = Boolean.FALSE;
+//    private Boolean status = Boolean.FALSE;
 
     public Voucher() {
         super();
@@ -49,11 +49,11 @@ public class Voucher extends AbstractAuditingEntity {
     @JoinColumn(name = "id_user")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_event")
     private Event event;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_product")
     private Product product;
 }
