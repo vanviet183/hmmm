@@ -8,6 +8,7 @@ import com.hit.product.domains.dtos.VoucherDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestApiV1
 public class VoucherController {
@@ -26,13 +27,16 @@ public class VoucherController {
     }
 
     @PostMapping(UrlConstant.Voucher.DATA_VOUCHER_CREATE)
-    public ResponseEntity<?> createVoucher(@RequestBody VoucherDto VoucherDto) {
-        return VsResponseUtil.ok(voucherService.createVoucher(VoucherDto));
+    public ResponseEntity<?> createVoucher(@RequestBody VoucherDto VoucherDto,
+                                           @RequestParam(name = "img", required = false) MultipartFile multipartFile) {
+        return VsResponseUtil.ok(voucherService.createVoucher(VoucherDto, multipartFile));
     }
 
     @PostMapping(UrlConstant.Voucher.DATA_VOUCHER_CREATE_FOR_PRODUCT)
-    public ResponseEntity<?> createVoucherForProduct(@PathVariable("idProduct") Long idProduct, @RequestBody VoucherDto VoucherDto) {
-        return VsResponseUtil.ok(voucherService.createVoucherForProduct(idProduct, VoucherDto));
+    public ResponseEntity<?> createVoucherForProduct(@PathVariable("idProduct") Long idProduct,
+                                                     @RequestBody VoucherDto VoucherDto,
+                                                     @RequestParam(name = "img", required = false) MultipartFile multipartFile) {
+        return VsResponseUtil.ok(voucherService.createVoucherForProduct(idProduct, VoucherDto, multipartFile));
     }
 
     @PostMapping(UrlConstant.Voucher.DATA_VOUCHER_GET_VOUCHER)
@@ -41,8 +45,10 @@ public class VoucherController {
     }
 
     @PatchMapping(UrlConstant.Voucher.DATA_VOUCHER_ID)
-    public ResponseEntity<?> updateVoucher(@PathVariable("id") Long id, @RequestBody VoucherDto VoucherDto) {
-        return VsResponseUtil.ok(voucherService.updateVoucher(id, VoucherDto));
+    public ResponseEntity<?> updateVoucher(@PathVariable("id") Long id,
+                                           @RequestBody VoucherDto VoucherDto,
+                                           @RequestParam(name = "img", required = false) MultipartFile multipartFile) {
+        return VsResponseUtil.ok(voucherService.updateVoucher(id, VoucherDto, multipartFile));
     }
 
     @DeleteMapping(UrlConstant.Voucher.DATA_VOUCHER_ID)

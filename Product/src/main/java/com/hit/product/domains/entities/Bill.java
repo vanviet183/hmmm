@@ -34,11 +34,16 @@ public class Bill extends AbstractAuditingEntity {
     @Nationalized
     private String note;
 
+    private Integer amount;
+
+    private Double VAT = 5.0;
+
+    private Double ship = 40000.0;
+
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_user")
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "bill")
-    @JsonIgnore
-    private List<Cart> carts;
+    private List<CartItem> cartItems;
 }

@@ -7,6 +7,7 @@ import com.hit.product.applications.repositories.RoleRepository;
 import com.hit.product.applications.repositories.UserRepository;
 import com.hit.product.applications.repositories.VerificationTokenRepository;
 import com.hit.product.applications.services.UserService;
+import com.hit.product.applications.utils.JwtUtil;
 import com.hit.product.applications.utils.UploadFile;
 import com.hit.product.configs.exceptions.NotFoundException;
 import com.hit.product.domains.dtos.UserDto;
@@ -39,6 +40,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    JwtUtil jwtUtil;
 
     @Autowired
     ApplicationEventPublisher publisher;
@@ -150,6 +154,12 @@ public class UserServiceImpl implements UserService {
         });
 
         return new TrueFalseResponse(true);
+    }
+
+    @Override
+    public User getUserByToken(String token) {
+        String username = jwtUtil.getUsernameFromJwtToken(token);
+        return userRepository.findByUsername(username).get();
     }
 
     private void checkUserException(Optional<User> user) {

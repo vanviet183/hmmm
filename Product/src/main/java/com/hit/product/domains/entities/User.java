@@ -12,9 +12,7 @@ import org.hibernate.annotations.Nationalized;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -103,6 +101,10 @@ public class User extends AbstractAuditingEntity {
             joinColumns = @JoinColumn(name = "id_user"),
             inverseJoinColumns = @JoinColumn(name = "id_notification"))
     private List<Notification> notifications;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @JsonIgnore
+    private List<CartItem> cartItems;
 
     private Boolean status = Boolean.FALSE;
 

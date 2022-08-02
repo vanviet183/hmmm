@@ -25,6 +25,8 @@ public class Voucher extends AbstractAuditingEntity {
 
     private Date expirationTime;
 
+    private String urlImage;
+
 //    private Boolean status = Boolean.FALSE;
 
     public Voucher() {

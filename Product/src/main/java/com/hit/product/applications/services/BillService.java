@@ -3,6 +3,7 @@ package com.hit.product.applications.services;
 import com.hit.product.adapter.web.v1.transfer.responses.TrueFalseResponse;
 import com.hit.product.domains.dtos.BillDto;
 import com.hit.product.domains.entities.Bill;
+import com.hit.product.domains.entities.CartItem;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface BillService {
 
     Bill getBillById(Long id);
 
-    Bill createBill(Long idUser, BillDto billDto);
+    Bill createBill(Long idUser, BillDto billDto, List<Long> idCartItems);
 
     Bill updateBill(Long id, BillDto billDto);
 

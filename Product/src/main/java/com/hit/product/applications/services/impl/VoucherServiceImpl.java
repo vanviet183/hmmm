@@ -5,6 +5,7 @@ import com.hit.product.applications.repositories.ProductRepository;
 import com.hit.product.applications.repositories.UserRepository;
 import com.hit.product.applications.repositories.VoucherRepository;
 import com.hit.product.applications.services.VoucherService;
+import com.hit.product.applications.utils.UploadFile;
 import com.hit.product.configs.exceptions.NotFoundException;
 import com.hit.product.domains.dtos.VoucherDto;
 import com.hit.product.domains.entities.Product;
@@ -13,7 +14,9 @@ import com.hit.product.domains.entities.Voucher;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +35,9 @@ public class VoucherServiceImpl implements VoucherService {
     @Autowired
     ModelMapper modelMapper;
 
+    @Autowired
+    UploadFile uploadFile;
+
     @Override
     public List<Voucher> getVouchers() {
         return voucherRepository.findAll();
@@ -45,19 +51,22 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
-    public Voucher createVoucher(VoucherDto voucherDto) {
-        return createOrUpdate(new Voucher(), voucherDto);
+    @Transactional
+    public Voucher createVoucher(VoucherDto voucherDto, MultipartFile multipartFile) {
+        return createOrUpdate(new Voucher(), voucherDto, multipartFile);
     }
 
     @Override
-    public Voucher updateVoucher(Long id, VoucherDto voucherDto) {
+    @Transactional
+    public Voucher updateVoucher(Long id, VoucherDto voucherDto, MultipartFile multipartFile) {
         Optional<Voucher> voucher = voucherRepository.findById(id);
         checkVoucherException(voucher);
-        return createOrUpdate(voucher.get(), voucherDto);
+        return createOrUpdate(voucher.get(), voucherDto, multipartFile);
     }
 
-    private Voucher createOrUpdate(Voucher voucher, VoucherDto voucherDto) {
+    private Voucher createOrUpdate(Voucher voucher, VoucherDto voucherDto, MultipartFile multipartFile) {
         modelMapper.map(voucherDto, voucher);
+        setImageVoucher(voucher, multipartFile);
         return voucherRepository.save(voucher);
     }
 
@@ -83,14 +92,23 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
-    public Voucher createVoucherForProduct(Long idProduct, VoucherDto voucherDto) {
+    @Transactional
+    public Voucher createVoucherForProduct(Long idProduct, VoucherDto voucherDto, MultipartFile multipartFile) {
         Optional<Product> product = productRepository.findById(idProduct);
         checkProductException(product);
 
         Voucher voucher = modelMapper.map(voucherDto, Voucher.class);
         voucher.setProduct(product.get());
 
+        setImageVoucher(voucher, multipartFile);
         return voucherRepository.save(voucher);
+    }
+
+    public void setImageVoucher(Voucher voucher, MultipartFile multipartFile) {
+        if(voucher.getUrlImage() != null) {
+            uploadFile.removeFileFromUrl(voucher.getUrlImage());
+        }
+        voucher.setUrlImage(uploadFile.getUrlFromFile(multipartFile));
     }
 
     private void checkVoucherException(Optional<Voucher> voucher) {

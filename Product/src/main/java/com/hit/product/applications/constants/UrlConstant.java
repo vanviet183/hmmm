@@ -20,6 +20,7 @@ public class UrlConstant {
     public static final String DATA_BILL = PRE_FIX;
     public static final String DATA_BILL_ID = PRE_FIX + "/{id}";
     public static final String DATA_BILL_CREATE = PRE_FIX + "/{idUser}/create";
+    public static final String DATA_BILL_PAY = PRE_FIX + "/{idBill}/create";
   }
 
   public static class Category {
@@ -43,14 +44,15 @@ public class UrlConstant {
     public static final String DATA_COMMENT_CHILD_RATE_BY_USER = PRE_FIX + "/{idUser}/{idProductRate}/{idCommentParent}";
   }
 
-  public static class Cart {
-    private Cart() {
+  public static class CartItem {
+      private CartItem() {
     }
 
-    private static final String PRE_FIX = "/carts";
-    public static final String DATA_CART = PRE_FIX;
-    public static final String DATA_CART_ID = PRE_FIX + "/{id}";
-    public static final String DATA_CART_CREATE = PRE_FIX + "/{idProduct}/create";
+    private static final String PRE_FIX = "/cart-items";
+    public static final String DATA_CART_ITEM = PRE_FIX;
+    public static final String DATA_CART_ITEM_ID = PRE_FIX + "/{id}";
+    public static final String DATA_CART_ITEM_LIST_BY_ID = PRE_FIX + "/by-list-id";
+    public static final String DATA_CART_ITEM_ADD_PRODUCT = PRE_FIX + "/user/{idUser}/add/{idProduct}";
   }
 
   public static class EmailNotification {
@@ -190,6 +192,7 @@ public class UrlConstant {
     private static final String PRE_FIX = "/users";
     public static final String DATA_USER = PRE_FIX;
     public static final String DATA_USER_ID = PRE_FIX + "/{id}";
+    public static final String DATA_USER_TOKEN = PRE_FIX + "/token";
     public static final String DATA_USER_VOUCHERS = PRE_FIX + "/{id}/vouchers";
     public static final String DATA_USER_USE_VOUCHER = PRE_FIX + "/{id}/vouchers/{idVoucher}";
     public static final String DATA_USER_AVATAR = PRE_FIX + "/{id}/avatar";

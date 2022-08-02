@@ -38,4 +38,6 @@ public interface UserService {
     List<Voucher> getListVoucher(Long idUser);
 
     TrueFalseResponse useVoucher(Long id, Long idVoucher);
+
+    User getUserByToken(String token);
 }

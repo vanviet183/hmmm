@@ -28,10 +28,10 @@ public class UserController {
     @Autowired
     private ApplicationEventPublisher publisher;
 
-//    @GetMapping("")
-//    public ResponseEntity<?> getUsers(@RequestParam Integer page) {
-//        return ResponseEntity.ok().body(userService.getAccounts(page));
-//    }
+    @GetMapping(UrlConstant.User.DATA_USER_TOKEN)
+    public ResponseEntity<?> getUserByToken(@RequestParam("token") String token) {
+        return ResponseEntity.ok().body(userService.getUserByToken(token));
+    }
 
     @GetMapping(UrlConstant.User.DATA_USER)
     public ResponseEntity<?> getUsers() {
