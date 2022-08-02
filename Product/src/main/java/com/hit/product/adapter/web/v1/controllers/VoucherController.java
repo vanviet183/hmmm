@@ -27,7 +27,7 @@ public class VoucherController {
     }
 
     @PostMapping(UrlConstant.Voucher.DATA_VOUCHER_CREATE)
-    public ResponseEntity<?> createVoucher(@RequestBody VoucherDto VoucherDto,
+    public ResponseEntity<?> createVoucher(@ModelAttribute VoucherDto VoucherDto,
                                            @RequestParam(name = "img", required = false) MultipartFile multipartFile) {
         return VsResponseUtil.ok(voucherService.createVoucher(VoucherDto, multipartFile));
     }
